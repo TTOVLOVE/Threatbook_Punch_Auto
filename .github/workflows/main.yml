@@ -29,5 +29,14 @@ jobs:
     - name: Set environment variable
       run: echo "THREATBOOK_COOKIE=${{ secrets.THREATBOOK_COOKIE }}" >> $GITHUB_ENV
 
+    - name: Debug cookie length (safe)
+      run: |
+        python - << 'PY'
+        import os
+        c = os.environ.get("THREATBOOK_COOKIE", "")
+        print("THREATBOOK_COOKIE length:", len(c))
+        print("THREATBOOK_COOKIE startswith:", c[:10])
+        PY
+
     - name: Run script
       run: python threatbook_auto.py
